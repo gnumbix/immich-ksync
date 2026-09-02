@@ -1,0 +1,67 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    name: Build and test
+    runs-on: ubuntu-latest
+    # Fedora, because that is where the KDE Frameworks 6 packages are current.
+    container: fedora:44
+
+    steps:
+      - name: Install build dependencies
+        run: |
+          dnf install -y --setopt=install_weak_deps=False \
+            gcc-c++ cmake ninja-build git \
+            extra-cmake-modules \
+            qt6-qtbase-devel qt6-qttools-devel \
+            kf6-kcoreaddons-devel kf6-kconfig-devel kf6-kconfigwidgets-devel \
+            kf6-ki18n-devel kf6-knotifications-devel \
+            kf6-kstatusnotifieritem-devel kf6-kdbusaddons-devel \
+            kf6-kio-devel kf6-kwindowsystem-devel kf6-kiconthemes-devel \
+            sqlite-devel openssl
+
+      - uses: actions/checkout@v4
+
+      - name: Regenerate certificate fixtures
+        # Proves the fixture script still works, and keeps the committed fixtures from
+        # silently expiring the build.
+        run: ./tools/make-test-certificates.sh
+
+      - name: Configure
+        run: cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Debug
+
+      - name: Build
+        run: cmake --build build
+
+      - name: Test
+        # The live-server and TLS suites skip themselves without their environment
+        # variables, so the whole suite runs green with no server.
+        env:
+          QT_QPA_PLATFORM: offscreen
+        run: ctest --test-dir build --output-on-failure
+
+      - name: Mutual-TLS suite
+        # The one test that proves a certificate reaches the wire rather than merely
+        # that the app decided to send one.
+        env:
+          QT_QPA_PLATFORM: offscreen
+          IMMICH_TEST_TLS: "1"
+        run: |
+          ./tools/run-tls-test-server.sh &
+          sleep 3
+          ctest --test-dir build --output-on-failure -R TlsLiveTest
+
+      - name: Install
+        run: cmake --install build --prefix /tmp/install
+
+      - name: Check the desktop file and AppStream metadata
+        run: |
+          dnf install -y --setopt=install_weak_deps=False desktop-file-utils libappstream-glib
+          desktop-file-validate /tmp/install/share/applications/com.gnumbix.immichksync.desktop
+          appstream-util validate-relax --nonet \
+            /tmp/install/share/metainfo/com.gnumbix.immichksync.metainfo.xml

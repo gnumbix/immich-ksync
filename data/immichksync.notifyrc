@@ -1,0 +1,22 @@
+[Global]
+IconName=com.gnumbix.immichksync
+Comment=ImmichKSync
+Name=ImmichKSync
+
+# A background sync agent has exactly two things worth interrupting someone for: it
+# stopped because it needs a decision, or it stopped because it cannot continue.
+# Everything else belongs in the log.
+
+[Event/safetyHold]
+Name=Album on hold
+Comment=An unusually large number of removals was withheld for review
+Action=Popup
+IconName=dialog-warning
+Urgency=Normal
+
+[Event/authenticationFailure]
+Name=Cannot sign in
+Comment=The server rejected the stored credentials
+Action=Popup
+IconName=dialog-error
+Urgency=Normal

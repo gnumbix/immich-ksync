@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>com.gnumbix.immichksync</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>AGPL-3.0-or-later</project_license>
+  <name>ImmichKSync</name>
+  <summary>Your Immich albums, as ordinary folders on your desktop</summary>
+
+  <description>
+    <p>
+      A native KDE system-tray agent that keeps a folder on your computer and your
+      Immich albums in continuous two-way agreement.
+    </p>
+    <p>
+      Every album you own becomes a real folder full of real files. Dolphin, digiKam,
+      rsync and your backup tool all see them, because they are just files. The app
+      renders nothing — no thumbnails, no gallery, no previews. It is a sync daemon
+      with a menu and a settings window.
+    </p>
+    <p>
+      Nothing is ever destroyed locally, and no asset is ever removed from your Immich
+      library. The strongest action in either direction is "remove from album" or "move
+      to a trash folder you control".
+    </p>
+  </description>
+
+  <launchable type="desktop-id">com.gnumbix.immichksync.desktop</launchable>
+  <url type="homepage">https://github.com/GnumBix/immich-ksync</url>
+  <url type="bugtracker">https://github.com/GnumBix/immich-ksync/issues</url>
+
+  <categories>
+    <category>Graphics</category>
+    <category>Photography</category>
+  </categories>
+
+  <provides>
+    <binary>immichksync</binary>
+  </provides>
+
+  <releases>
+    <release version="1.0.0" date="2026-08-31"/>
+  </releases>
+
+  <content_rating type="oars-1.1"/>
+</component>

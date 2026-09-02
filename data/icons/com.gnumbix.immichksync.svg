@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ImmichKSync application icon.
+
+  The palette and composition are shared with the macOS sibling of this project so the
+  two read as one product: an indigo-to-violet ground, a warm amber folder, and a photo
+  peeking out of it. Deliberately unlike Immich's own warm rainbow mark, so the app
+  never looks like it is claiming to be official.
+
+  Breeze does not use a squircle, so this is a plain rounded rectangle rather than the
+  superellipse the macOS icon draws.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5A4AE5"/>
+      <stop offset="1" stop-color="#8336D4"/>
+    </linearGradient>
+    <linearGradient id="folderBack" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFDD83"/>
+      <stop offset="1" stop-color="#FEBD4D"/>
+    </linearGradient>
+    <linearGradient id="folderFront" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFCB53"/>
+      <stop offset="1" stop-color="#F99D2E"/>
+    </linearGradient>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#73D0FA"/>
+      <stop offset="1" stop-color="#C7ECFF"/>
+    </linearGradient>
+    <clipPath id="photoClip">
+      <rect x="21" y="20" width="22" height="16" rx="1.5"/>
+    </clipPath>
+  </defs>
+
+  <rect x="2" y="2" width="60" height="60" rx="13" fill="url(#ground)"/>
+
+  <!-- The back half of the folder, visible above the photo. -->
+  <path d="M11 24a3 3 0 0 1 3-3h11l3.5 4H50a3 3 0 0 1 3 3v3H11z"
+        fill="url(#folderBack)"/>
+
+  <!-- The photo, sitting inside the folder and rising out of it. -->
+  <g clip-path="url(#photoClip)">
+    <rect x="21" y="20" width="22" height="16" fill="#FFFFFF"/>
+    <rect x="22" y="21" width="20" height="14" fill="url(#sky)"/>
+    <circle cx="37" cy="25" r="2.6" fill="#FFBD42"/>
+    <path d="M22 35l6-7 5 5 4-3 5 5v3H22z" fill="#44A58A"/>
+    <path d="M22 35l7-5 6 5z" fill="#287A66"/>
+  </g>
+  <rect x="21" y="20" width="22" height="16" rx="1.5" fill="none"
+        stroke="#FFFFFF" stroke-width="1.6"/>
+
+  <!-- The front half of the folder, in front of the photo. -->
+  <path d="M11 30h42v18a3 3 0 0 1-3 3H14a3 3 0 0 1-3-3z" fill="url(#folderFront)"/>
+</svg>

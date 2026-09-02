@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+Name=ImmichKSync
+GenericName=Immich Album Sync
+Comment=Keep a folder and your Immich albums in continuous two-way agreement
+Exec=immichksync
+Icon=com.gnumbix.immichksync
+Terminal=false
+Categories=Qt;KDE;Graphics;Photography;
+Keywords=immich;photo;sync;album;backup;
+StartupNotify=false
+X-DBUS-ServiceName=com.gnumbix.immichksync
+X-DBUS-StartupType=Unique

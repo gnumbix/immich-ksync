@@ -1,0 +1,46 @@
+# Flatpak manifest for ImmichKSync.
+#
+# The permissions below are the smallest set the app actually needs, but two of them
+# are worth understanding before choosing this over the native package:
+#
+#   * `--filesystem=home` is broad. The app's whole purpose is to sync a folder the
+#     user picks, and that folder can be anywhere. Narrowing this to `xdg-pictures`
+#     works if the sync folder lives there, and is the safer choice when it does.
+#   * `--talk-name=org.freedesktop.secrets` is what lets credentials be stored at all.
+#     Without it the app runs but cannot remember an API key.
+#
+# The sandbox also means the app cannot see an external drive mounted outside the
+# portal, which the native build has no trouble with. That is a real behaviour
+# difference, not a packaging detail.
+
+app-id: com.gnumbix.immichksync
+runtime: org.kde.Platform
+runtime-version: '6.8'
+sdk: org.kde.Sdk
+command: immichksync
+
+finish-args:
+  - --share=network
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --share=ipc
+  - --device=dri
+  # The sync folder can be anywhere the user keeps photos.
+  - --filesystem=home
+  # Credential storage.
+  - --talk-name=org.freedesktop.secrets
+  # The system tray.
+  - --talk-name=org.kde.StatusNotifierWatcher
+  # Desktop notifications.
+  - --talk-name=org.freedesktop.Notifications
+  # Waking from suspend, so a cycle runs when the lid opens.
+  - --system-talk-name=org.freedesktop.login1
+
+modules:
+  - name: immichksync
+    buildsystem: cmake-ninja
+    config-opts:
+      - -DCMAKE_BUILD_TYPE=Release
+    sources:
+      - type: dir
+        path: ../..
