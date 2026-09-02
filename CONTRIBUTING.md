@@ -35,7 +35,6 @@ make test
 | `make test` | nothing external |
 | `make test-live IMMICH_TEST_SERVER=… IMMICH_TEST_API_KEY=…` | a real Immich server |
 | `./tools/run-tls-test-server.sh & make test-tls` | `openssl` |
-| `make e2e` | a live KDE Plasma session |
 
 The live suite creates its own albums, excludes every other album so your real library is
 never touched, and deletes what it created. It is still worth pointing at a test server
